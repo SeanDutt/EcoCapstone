@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Daily check-in</h1>
+<p>Enter how many servings of each food item you prepared or threw away today.</p>
+
+{% for food in items %}
+<li>
+  <p>{{food.item}}</p>
+  <button class="sub">-</button>
+  <input type="text" class="qtyBox" readonly="" value="" min=0>
+  <button class="add">+</button>
+</li>
+{% endfor %}
+{% endblock %}
