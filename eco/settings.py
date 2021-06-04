@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'eco_app',
     'accounts',
+    'api',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

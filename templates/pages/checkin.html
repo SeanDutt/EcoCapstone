@@ -3,12 +3,15 @@
 <h1>Daily check-in</h1>
 <p>Enter how many servings of each food item you prepared or threw away today.</p>
 
-{% for food in items %}
-<li>
-  <p>{{food.item}}</p>
-  <button class="sub">-</button>
-  <input type="text" class="qtyBox" readonly="" value="" min=0>
-  <button class="add">+</button>
-</li>
-{% endfor %}
+<form action="{% url 'add_checkin' %}" method="POST" id="checkin">
+  {% csrf_token %}
+  <div id="container">
+    <button  type="submit" id="submit" form="checkin">Submit your check in!</button>
+  </div>
+
+</form>
+
+
+<script src="../../static/js/checkin.js"></script>
+
 {% endblock %}
