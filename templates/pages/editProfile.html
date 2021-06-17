@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/editProfile.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+  <form action="{% url 'editProfile' %}" method="POST" id="editProfile">
+    {% csrf_token %}
+    <label for="zip">Your ZIP</label>
+    <input id="zip" type="text" name="zip"><br>
+
+    <label for="continent">Your continent</label>
+    <select name="continent" id="continent">
+      <option value="Asia">Asia</option>
+      <option value="Africa">Africa</option>
+      <option value="Europe">Europe</option>
+      <option value="North America">North America</option>
+      <option value="South America">South America</option>
+      <option value="Australia/Oceania">Australia/Oceania</option>
+      <option value="Antarctica">Antarctica</option>
+    </select><br>
+
+    <label for="income">Estimated income</label>
+    <input type="text" name="income">
+
+    <button  type="submit" id="submit">Update!</button>
+  </form>
+</div>
+{% endblock %}

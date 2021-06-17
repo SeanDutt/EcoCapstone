@@ -1,4 +1,9 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/checkin.css' %}">
+{% endblock %}
+{% block content %}
 
 <h1>Daily check-in</h1>
 <p>Enter how many servings of each food item you prepared or threw away today.</p>
@@ -13,5 +18,4 @@
 
 
 <script src="../../static/js/checkin.js"></script>
-
 {% endblock %}

@@ -1,4 +1,49 @@
-{% extends 'base.html' %} {% block content %}
-<h1>Profile</h1>
+{% extends 'base.html' %} 
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="pic">
+    <ul>
+      <li>Username: {{ user.username }}</li>
+      <li>ZIP code: {{ user.profile.zipCode }}</li>
+      <li>Continent: {{ user.profile.continent }}</li>
+      <li>Estimated income: {{ user.profile.income }}</li>
+    </ul>
+    <a href="{% url 'editProfile'%}">Edit profile</a>
+  </div>
 
+  <div class="charts">
+    <div class="chart" id="chart0"></div>
+    <div class="chart" id="chart1"></div>
+    <div class="chart" id="chart2"></div>
+    <div class="chart" id="chart3"></div>
+  </div>
+
+  <div class="header">
+    <h1>Compare your timeline to your friend!</h1>
+    <form action="{% url 'compare' %}" method="POST" id="compare">
+      {% csrf_token %}
+      <input type="search" value="Enter user to compare with" name="compare">
+      <button  type="submit" id="submit" form="compare">Compare</button>
+    </form>
+  </div>
+
+  <div class="info">
+    <p>Total checkins: {{checkins|length}}</p>
+  </div>
+</div>
+
+
+
+{% for post in checkins %}
+  <p class="date">{{post.date}}</p>
+  <p class="score">{{post.score}}</p>
+  {% endfor %}
+
+
+
+<script src="../../static/js/profile.js"></script>
 {% endblock %}

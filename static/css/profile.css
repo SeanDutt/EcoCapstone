@@ -1,0 +1,52 @@
+.container {
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr;
+  grid-template-rows: 0.5fr 1.5fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "pic header"
+    "info charts";
+}
+
+.pic { grid-area: pic; }
+
+.charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 30px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". ."
+    ". .";
+  grid-area: charts;
+}
+
+.charts div{
+  height: 300px;
+}
+
+.header { grid-area: header; }
+
+.info { grid-area: info; }
+
+.chart{
+  border: 3px solid black;
+  opacity: 90%;
+  width: 75%;
+}
+
+#charter input{
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  padding: 0;
+  width: 310px;
+  height: 60px;
+  text-align: center;
+  font-size: 1.5em;
+  background: transparent;
+  box-shadow: inset -2px -2px 2px rgba(255,255,255,.2),
+              inset 2px 5px 15px rgba(0,0,0,.5);
+}

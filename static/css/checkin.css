@@ -1,0 +1,81 @@
+ul > *{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+h2, button{
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  width: 60px;
+  height: 60px;
+  font-size: 3em;
+  line-height: 60px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  box-shadow: inset 2px 2px 2px rgba(255,255,255,.1),
+              inset -2px -5px 15px rgba(0,0,0,.5);
+}
+
+h2:active, #submit:active{
+  box-shadow: inset -2px -2px 2px rgba(255,255,255,.2),
+  inset 2px 5px 15px rgba(0,0,0,.5);
+}
+
+#container{
+  width: 100%;
+  display:inline-grid;
+  text-align: center;
+  justify-content: center;
+}
+
+#container li{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 0.5fr 1.5fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "label label label"
+    ". . .";
+  justify-items: center;
+  margin: 24px 0px;
+}
+
+#container input{
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  padding: 0;
+  width: 100px;
+  height: 60px;
+  text-align: center;
+  font-size: 1.5em;
+  background: transparent;
+  box-shadow: inset -2px -2px 2px rgba(255,255,255,.2),
+              inset 2px 5px 15px rgba(0,0,0,.5);
+}
+
+label {
+  font-size: 1.5em;
+  font-weight: 900;
+  grid-area: label;
+  padding-bottom: 8px;
+}
+
+#submit{
+  font-size: 1.5em;
+  margin: 24px 0px;
+  width: 300px;
+  background: white;
+  opacity: 75%;
+  margin-bottom: 16px;
+}
