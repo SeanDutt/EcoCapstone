@@ -9,7 +9,11 @@
     "info charts";
 }
 
-.pic { grid-area: pic; }
+.pic {grid-area: pic;}
+
+.pic img{
+  border-radius: 50%;
+}
 
 .charts {
   display: grid;
@@ -27,7 +31,12 @@
   height: 300px;
 }
 
-.header { grid-area: header; }
+
+
+.header{
+  grid-area: header;
+  text-align: center;
+}
 
 .info { grid-area: info; }
 
@@ -49,4 +58,8 @@
   background: transparent;
   box-shadow: inset -2px -2px 2px rgba(255,255,255,.2),
               inset 2px 5px 15px rgba(0,0,0,.5);
+}
+
+#data p{
+  visibility: hidden;
 }

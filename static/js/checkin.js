@@ -8,8 +8,7 @@ function AddCounter(id){
   let subBtn = document.createElement("h2")
   let qtyBox = document.createElement("input")
 
-
-  label.innerHTML = obj[id]["item"];
+  label.innerHTML = obj[id]["item"] + "<br>" + obj[id]["co2PerUnit"] + " kgs of CO2/serving";;
   qtyBox.name = obj[id]["item"]
   qtyBox.value = 0
   qtyBox.id = "qtyBox"+id

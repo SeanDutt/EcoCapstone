@@ -6,13 +6,9 @@
 {% block content %}
 <div class="container">
   <div class="pic">
-    <ul>
-      <li>Username: {{ user.username }}</li>
-      <li>ZIP code: {{ user.profile.zipCode }}</li>
-      <li>Continent: {{ user.profile.continent }}</li>
-      <li>Estimated income: {{ user.profile.income }}</li>
-    </ul>
-    <a href="{% url 'editProfile'%}">Edit profile</a>
+    {% if user.profile.profile_pic %}
+      <img src="{{ user.profile.profile_pic.url }}" alt="" width="100%" height="100%">
+    {% endif %}
   </div>
 
   <div class="charts">
@@ -32,17 +28,40 @@
   </div>
 
   <div class="info">
+    <ul>
+      <li>Username: {{ user.username }}</li>
+      <li>ZIP code: {{ user.profile.zipCode }}</li>
+      <li>Continent: {{ user.profile.continent }}</li>
+      <li>Estimated income: {{ user.profile.income }}</li>
+    </ul>
+    <a href="{% url 'editProfile'%}">Edit profile</a>
     <p>Total checkins: {{checkins|length}}</p>
+    <p>Average checkin: {{avg}}</p>
   </div>
 </div>
 
 
-
+<div id="data">
 {% for post in checkins %}
-  <p class="date">{{post.date}}</p>
-  <p class="score">{{post.score}}</p>
+  <p class="userDate">{{post.date}}</p>
+  <p class="userScore">{{post.score}}</p>
   {% endfor %}
 
+{% for post in contScores %}
+  <p class="contProfile">{{post.profile}}</p>
+  <p class="contScore">{{post.score}}</p>
+  {% endfor %}
+
+{% for post in zipScores %}
+  <p class="zipProfile">{{post.profile}}</p>
+  <p class="zipScore">{{post.score}}</p>
+  {% endfor %}
+
+{% for post in incomeScores %}
+  <p class="incomeProfile">{{post.profile}}</p>
+  <p class="incomeScore">{{post.score}}</p>
+  {% endfor %}
+</div>
 
 
 <script src="../../static/js/profile.js"></script>

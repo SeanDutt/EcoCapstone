@@ -3,8 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.db.models import Q
+import datetime
 
-from .models import Checkin, Serving, Profile
+from .models import Checkin, Serving, Profile, User
 
 
 def home(request):
@@ -14,15 +16,41 @@ def about(request):
     return render(request, 'pages/about.html')
 
 @login_required
-def profile(request):
-    continent = Checkin.objects.filter()
-    incomeLevel = Checkin.objects.filter()
-    zipCode = Checkin.objects.filter()
-    checkins = Checkin.objects.filter(user=request.user)
+def profilepage(request):
+    today = datetime.date.today()
+    d = today.strftime("%Y-%m-%d")
+
+    contScores = []
+    for checkin in Checkin.objects.all():
+        if str(checkin.date) == d:
+            if checkin.profile.continent == request.user.profile.continent:
+                contScores.append(checkin)
+
+
+    zipScores = []
+    for checkin in Checkin.objects.all():
+        if str(checkin.date) == d:
+            if checkin.profile.zipCode == request.user.profile.zipCode:
+                zipScores.append(checkin)
+
+
+    incomeScores = []
+    for checkin in Checkin.objects.all():
+        if str(checkin.date) == d:
+            if checkin.profile.income == request.user.profile.income:
+                incomeScores.append(checkin)
+
+    checkins = Checkin.objects.filter(profile=request.user.profile)
+    avg = 0
+    for checkin in checkins:
+        avg += checkin.score
+    avg = avg / len(checkins)
+
     context = {
-        'continent':continent,
-        'incomeLevel':incomeLevel,
-        'zipCode':zipCode,
+        'avg':avg,
+        'contScores':contScores,
+        'zipScores':zipScores,
+        'incomeScores':incomeScores,
         'checkins':checkins
     }
     return render(request, 'pages/profile.html', context)
@@ -38,10 +66,10 @@ def editProfile(request):
         user.continent = request.POST.get("continent")
         user.income = request.POST.get("income")
         user.save()
-        return profile(request)
+        return profilepage(request)
 
 @login_required
-def checkin(request):
+def checkinpage(request):
     if request.method == 'GET':
         return render(request, 'pages/checkin.html')
 
@@ -56,7 +84,7 @@ def add_checkin(request):
         footprint += int(check) * float(item.co2PerUnit)
         Serving.objects.create(container=checkin, key=item, value=int(check))
 
-    checkin.user = request.user
+    checkin.profile = request.user.profile
     checkin.score = footprint
     checkin.save()
 
@@ -64,8 +92,9 @@ def add_checkin(request):
 
 @login_required
 def compare(request):
-    away = User.objects.get(username=request.POST['compare'])
-    home = Checkin.objects.filter(user=request.user).order_by('date')
+    user = User.objects.filter(username=request.POST.get("compare")).first().id
+    away = Checkin.objects.filter(profile=user) 
+    home = Checkin.objects.filter(profile=request.user.profile)
 
     context = {
         'home':home,

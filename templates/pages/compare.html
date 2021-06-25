@@ -1,23 +1,31 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+{% block content %}
 <div id="charter">
   <form action="{% url 'compare' %}" method="POST" id="compare">
     {% csrf_token %}
     <input type="search" value="Enter user to compare with" name="compare">
     <button  type="submit" id="submit" form="compare">Compare</button>
   </form>
-  <p id="away_name">{{away}}</p>
+  <div id="chart"></div>
+</div>
+
+<div id="data">
+  <p id="away_name">{{away.profile}}</p>
   {% for post in home %}
     <p class="home_date">{{post.date}}</p>
     <p class="home_score">{{post.score}}</p>
     {% endfor %}
 
-  {% for post in away.checkin_set.all %}
+  {% for post in away %}
     <p class="away_date">{{post.date}}</p>
     <p class="away_score">{{post.score}}</p>
     {% endfor %}
-
-  <div id="chart"></div>
 </div>
+
 <script src="../../static/js/compare.js"></script>
 
 {% endblock %}

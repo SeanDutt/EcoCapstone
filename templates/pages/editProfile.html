@@ -22,7 +22,19 @@
     </select><br>
 
     <label for="income">Estimated income</label>
-    <input type="text" name="income">
+    <select name="income" id="income">
+      <option value="0 to 10k">0 to 10k</option>
+      <option value="10k to 20k">10k to 20k</option>
+      <option value="20k to 40k">20k to 40k</option>
+      <option value="40k to 60k">40k to 60k</option>
+      <option value="60k to 80k">60k to 80k</option>
+      <option value="80k to 100k">80k to 100k</option>
+      <option value="100k to 150k">100k to 150k</option>
+      <option value="Over 150k">Over 150k</option>
+    </select><br>
+
+    <label for="profile pic">Profile picture</label>
+    <input id="pic" type="image" name="pic"><br>
 
     <button  type="submit" id="submit">Update!</button>
   </form>
