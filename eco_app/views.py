@@ -1,9 +1,7 @@
 from api.models import Impact
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
-from django.db.models import Q
 import datetime
 
 from .models import Checkin, Serving, Profile, User
@@ -44,7 +42,9 @@ def profilepage(request):
     avg = 0
     for checkin in checkins:
         avg += checkin.score
-    avg = avg / len(checkins)
+    
+    if len(checkins):
+        avg = round(avg / len(checkins), 2)
 
     context = {
         'avg':avg,
@@ -92,12 +92,53 @@ def add_checkin(request):
 
 @login_required
 def compare(request):
-    user = User.objects.filter(username=request.POST.get("compare")).first().id
-    away = Checkin.objects.filter(profile=user) 
+    user = User.objects.filter(username=request.POST.get("compare"))
+    away = Checkin.objects.filter(profile=user.first().profile)
     home = Checkin.objects.filter(profile=request.user.profile)
 
+    # print(away.last().date, home.last().date)
+    if away[0].date <= home[0].date: # Finds the first date checked in between both users
+        first = away[0].date
+    else:
+        first = home[0].date
+
+    # print(first)
+
+    if away.last().date <= home.last().date: # Finds the most recent checkin between both users
+        last = home.last().date
+    else:
+        last = away.last().date
+
+    # print(last)
+
+    step = datetime.timedelta(days=1)
+    timeline = []
+
+    while first <= last:
+        timeline.append(first)
+        first += step
+
+    # print(timeline)
+
+    user_checkins = []
+    compare_checkins = []
+
+    for day in timeline:
+        if Checkin.objects.filter(profile=user.first().profile, date=day):
+            user_checkins.append(Checkin.objects.get(profile=user.first().profile, date=day))
+        else:
+            user_checkins.append(None)
+
+        if Checkin.objects.filter(profile=request.user.profile, date=day):
+            compare_checkins.append(Checkin.objects.get(profile=request.user.profile, date=day))
+        else:
+            compare_checkins.append(None)
+
+    # print(user_checkins, compare_checkins)
+
     context = {
-        'home':home,
-        'away':away,
+        'timeline':timeline,
+        'user_checkins':user_checkins,
+        'compare_checkins':compare_checkins,
     }
     return render(request, 'pages/compare.html', context)

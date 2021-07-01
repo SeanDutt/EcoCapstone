@@ -1,12 +1,9 @@
 @font-face {
   font-family: 'caviar';
   src: url('/static/fonts/CaviarDreams-webfont.woff') format('woff');
-  font-weight: normal;
+  font-weight: 2000;
   font-style: normal;
 }
-
-
-
 
 *{
   margin: 0;
@@ -63,4 +60,3 @@ li{
   background-color: #ddd;
   color: black;
 }
-

@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/signinup.css' %}">
+{% endblock %}
 {% block content %}
 
 <form action="" method="POST">
@@ -10,10 +14,7 @@
     <input class="form-control" type="password" name="password">
     <label for="email">Email</label>
     <input class="form-control" type="text" name="email">
-    <label for="first_name">First name</label>
-    <input class="form-control" type="text" name="first_name">
-    <label for="last_name">Last name</label>
-    <input class="form-control" type="text" name="last_name"><br>
+    <small id="emailHelp" class="form-text text-muted">I promise to never share your email with anyone else.</small><br>
     <button type="submit" class="btn btn-primary mb-2 mt-3">Submit</button>
   </div>
 </form>

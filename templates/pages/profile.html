@@ -12,19 +12,47 @@
   </div>
 
   <div class="charts">
-    <div class="chart" id="chart0"></div>
-    <div class="chart" id="chart1"></div>
-    <div class="chart" id="chart2"></div>
-    <div class="chart" id="chart3"></div>
+
+    <div class="btn-group">
+      <button id="all">All checkins</button>
+      <button id="last-28">Last 28</button>
+      <button id="last-7">Last 7</button>
+    </div>
+
+    <div id="togglecharts">
+      <div class="chart" id="allcheckins"></div>
+      <div class="chart" id="last7"></div>
+      <div class="chart" id="last28"></div>
+    </div>
+
+    <div class="btn-group">
+      <button id="cont">Continent</button>
+      <button id="zip">ZIP code</button>
+      <button id="income">Income level</button>
+    </div>
+
+    <div id="profileCharts">
+      <div class="chart" id="continentchart"></div>
+      <div class="chart" id="zipchart"></div>
+      <div class="chart" id="incomechart"></div>
+    </div>
+    
+    <div id="compareContainer">
+      <h1>Compare your timeline to your friend!</h1>
+      <form action="{% url 'compare' %}" method="POST" id="compare">
+        {% csrf_token %}
+        <input type="search" value="Enter user to compare with" name="compare">
+        <button  type="submit" id="submit" form="compare">Compare</button>
+      </form>
+    </div>
+
   </div>
 
   <div class="header">
-    <h1>Compare your timeline to your friend!</h1>
-    <form action="{% url 'compare' %}" method="POST" id="compare">
-      {% csrf_token %}
-      <input type="search" value="Enter user to compare with" name="compare">
-      <button  type="submit" id="submit" form="compare">Compare</button>
-    </form>
+    <h1>{{ user.username }}'s profile!</h1>
+    <p>This is where you can see your personal checkin history,</p>
+    <p>how you compare to others today,</p>
+    <p>and compare checkin history with your friends!</p>
   </div>
 
   <div class="info">
@@ -34,9 +62,9 @@
       <li>Continent: {{ user.profile.continent }}</li>
       <li>Estimated income: {{ user.profile.income }}</li>
     </ul>
-    <a href="{% url 'editProfile'%}">Edit profile</a>
     <p>Total checkins: {{checkins|length}}</p>
     <p>Average checkin: {{avg}}</p>
+    <a href="{% url 'editProfile'%}">Edit profile</a>
   </div>
 </div>
 

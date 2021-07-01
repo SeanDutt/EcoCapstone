@@ -14,16 +14,27 @@
 </div>
 
 <div id="data">
-  <p id="away_name">{{away.profile}}</p>
-  {% for post in home %}
-    <p class="home_date">{{post.date}}</p>
-    <p class="home_score">{{post.score}}</p>
-    {% endfor %}
+  {% for date in timeline %}
+    <p class="timeline">{{date}}</p>
+  {% endfor %}
+  <p id="away_name">{{away.first.profile}}</p>
+  {% for checkin in compare_checkins %}
+    {% if checkin is None %}
+      <p class="away_score">null</p>
+    {% else %}
+      <p class="away_date">{{ checkin.date }}</p>
+      <p class="away_score">{{ checkin.score }}</p>
+    {% endif %}
+  {% endfor %}
 
-  {% for post in away %}
-    <p class="away_date">{{post.date}}</p>
-    <p class="away_score">{{post.score}}</p>
-    {% endfor %}
+  {% for checkin in user_checkins %}
+    {% if checkin is None %}
+      <p class="home_score">null</p>
+    {% else %}
+      <p class="home_date">{{ checkin.date }}</p>
+      <p class="home_score">{{ checkin.score }}</p>
+    {% endif %}
+  {% endfor %}
 </div>
 
 <script src="../../static/js/compare.js"></script>

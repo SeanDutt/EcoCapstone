@@ -58,32 +58,139 @@ for (checkin of incomeScore){
   }
 
 
+
+let all = document.getElementById("all")
+let last7 = document.getElementById("last-7")
+let last28 = document.getElementById("last-28")
+let contchart = document.getElementById("cont")
+let zipchart = document.getElementById("zip")
+let incochart = document.getElementById("income")
+
+all.addEventListener("click", function(){
+    let chart = document.getElementById("allcheckins")
+    let hide1 = document.getElementById("last7")
+    let hide2 = document.getElementById("last28")
+    chart.style.visibility = "visible"
+    hide1.style.visibility = "hidden"
+    hide2.style.visibility = "hidden"
+})
+
+last7.addEventListener("click", function(){
+    let hide1 = document.getElementById("allcheckins")
+    let chart = document.getElementById("last7")
+    let hide2 = document.getElementById("last28")
+    chart.style.visibility = "visible"
+    hide1.style.visibility = "hidden"
+    hide2.style.visibility = "hidden"
+})
+
+last28.addEventListener("click", function(){
+    let hide1 = document.getElementById("allcheckins")
+    let chart = document.getElementById("last28")
+    let hide2 = document.getElementById("last7")
+    chart.style.visibility = "visible"
+    hide1.style.visibility = "hidden"
+    hide2.style.visibility = "hidden"
+})
+
+contchart.addEventListener("click", function(){
+    let hide1 = document.getElementById("zipchart")
+    let chart = document.getElementById("continentchart")
+    let hide2 = document.getElementById("incomechart")
+    chart.style.visibility = "visible"
+    hide1.style.visibility = "hidden"
+    hide2.style.visibility = "hidden"
+})
+
+zipchart.addEventListener("click", function(){
+    let hide1 = document.getElementById("continentchart")
+    let chart = document.getElementById("zipchart")
+    let hide2 = document.getElementById("incomechart")
+    chart.style.visibility = "visible"
+    hide1.style.visibility = "hidden"
+    hide2.style.visibility = "hidden"
+})
+
+incochart.addEventListener("click", function(){
+    let hide1 = document.getElementById("continentchart")
+    let chart = document.getElementById("incomechart")
+    let hide2 = document.getElementById("zipchart")
+    chart.style.visibility = "visible"
+    hide1.style.visibility = "hidden"
+    hide2.style.visibility = "hidden"
+})
+
 document.addEventListener('DOMContentLoaded', function () {
-  const chart = Highcharts.chart('chart0', {
-      chart: {
-          type: 'line'
-      },
-      title: {
-          text: 'Your impact scores'
-      },
-      xAxis: {
-          categories: userDates,
-      },
-      yAxis: {
-          title: {
-              text: 'Scores'
-          }
-      },
-      series: [{
-          name: 'Daily score',
-          data: userScores,
-      }]
-  });
+    const chart = Highcharts.chart('allcheckins', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Your impact scores'
+        },
+        xAxis: {
+            categories: userDates,
+        },
+        yAxis: {
+            title: {
+                text: 'Scores'
+            }
+        },
+        series: [{
+        name: 'Daily score',
+        data: userScores,
+        }]
+    });
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const chart = Highcharts.chart('last7', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Your impact scores'
+        },
+        xAxis: {
+            categories: userDates.slice(-7),
+        },
+        yAxis: {
+            title: {
+                text: 'Scores'
+            }
+        },
+        series: [{
+        name: 'Daily score',
+        data: userScores.slice(-7),
+        }]
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function () {
-    const chart = Highcharts.chart('chart1', {
+    const chart = Highcharts.chart('last28', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Your impact scores'
+        },
+        xAxis: {
+            categories: userDates.slice(-28),
+        },
+        yAxis: {
+            title: {
+                text: 'Scores'
+            }
+        },
+        series: [{
+        name: 'Daily score',
+        data: userScores.slice(-28),
+        }]
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const chart = Highcharts.chart('continentchart', {
         chart: {
             type: 'column'
         },
@@ -105,9 +212,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-
   document.addEventListener('DOMContentLoaded', function () {
-    const chart = Highcharts.chart('chart2', {
+    const chart = Highcharts.chart('zipchart', {
         chart: {
             type: 'column'
         },
@@ -129,9 +235,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-
   document.addEventListener('DOMContentLoaded', function () {
-    const chart = Highcharts.chart('chart3', {
+    const chart = Highcharts.chart('incomechart', {
         chart: {
             type: 'column'
         },
