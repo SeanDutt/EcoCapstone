@@ -1,18 +1,28 @@
 .container {
   display: grid; 
-  grid-template-columns: 0.5fr 1.5fr; 
+  grid-template-columns: 1fr; 
   grid-template-rows: 0.5fr 1.5fr; 
   gap: 0px 0px; 
   grid-template-areas: 
-    "pic header"
-    "info charts"; 
+    "header"
+    "pic"
+    "info"
+    "charts"; 
 }
+
+.container > *{
+  margin: auto;
+}
+
 .pic {
   grid-area: pic;
   padding: 15px;
 }
 
-.info { grid-area: info; }
+.info {
+  grid-area: info;
+  margin-bottom: 16px;
+}
 
 .charts {
   display: grid; 
@@ -26,37 +36,37 @@
 }
 .header { grid-area: header; }
 
-.charts div{
+.charts div {
   height: 300px;
-  width: 90%;
   margin: 0 0 4rem 0;
 }
 
-.pic img{
+.pic img {
   border: 1px solid black;
   border-radius: 33%;
   height: 300px;
   width: 300px;
 }
 
-.header{
+.header {
   grid-area: header;
   text-align: center;
 }
 
 .info { grid-area: info; }
 
-.chart{
+.chart, #charter {
   border: 3px solid black;
-  opacity: 90%;
-  width: 75%;
+  opacity: 95%;
 }
 
-#data p{
+#data p {
   visibility: hidden;
+  height: 0;
+  width: 0;
 }
 
-.btn-group button{
+.btn-group button {
   background-color: #04AA6D;
   border: 1px solid green;
   color: white;
@@ -65,7 +75,7 @@
   float: left;
 }
 
-.btn-group button:not(:last-child){
+.btn-group button:not(:last-child) {
   border-right: none;
 }
 
@@ -83,7 +93,7 @@
 }
 
 form > *{
-  width: 100%;
+  width: 98%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -93,6 +103,26 @@ form > *{
   font-size: large;
 }
 
+#charter {
+  width: 97.5%;
+}
+
 #compareContainer > *{
   text-align: center;
 }
+
+@media only screen and (min-width: 1066px) {
+  .container {
+    display: grid; 
+    grid-template-columns: 0.5fr 1.5fr; 
+    grid-template-rows: 0.5fr 1.5fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "pic header"
+      "info charts"; 
+  }
+  
+  .container > *{
+    margin: 0;
+  }
+  }

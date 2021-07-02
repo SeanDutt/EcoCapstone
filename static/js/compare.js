@@ -1,6 +1,8 @@
 let away_name = document.getElementById("away_name").innerHTML
 let home_score_list = document.getElementsByClassName("home_score")
 let away_score_list = document.getElementsByClassName("away_score")
+let home_date_list = document.getElementsByClassName("home_date")
+let away_date_list = document.getElementsByClassName("away_date")
 
 let home_scores = []
 let away_scores = []
@@ -12,18 +14,50 @@ for (date of dates){
   timeline.push(date.innerHTML)
 }
 
-for (score of home_score_list){
-  home_scores.push(parseFloat(score.innerHTML))
+real_home_scores = []
+real_home_dates = []
+
+for (checkin of home_date_list){
+  real_home_dates.push(checkin.innerHTML)
 }
 
-for (score of away_score_list){
-  away_scores.push(parseFloat(score.innerHTML))
+home_dates = []
+for (date of real_home_dates){
+  day = date.split(" ")
+  home_dates.push(Date.UTC(day[0], day[1], day[2]))
 }
 
-console.log(dates)
+for (checkin of home_score_list){
+  real_home_scores.push(checkin.innerHTML)
+}
+
+for (i=0;i<real_home_scores.length;i++){
+  home_scores.push([(home_dates[i]), parseFloat(real_home_scores[i])])
+}
+
+real_away_scores = []
+real_away_dates = []
+
+for (checkin of away_date_list){
+  real_away_dates.push(checkin.innerHTML)
+}
+
+away_dates = []
+for (date of real_away_dates){
+  day = date.split(" ")
+  away_dates.push(Date.UTC(day[0], day[1], day[2]))
+}
+
+for (checkin of away_score_list){
+  real_away_scores.push(checkin.innerHTML)
+}
+
+for (i=0;i<real_away_scores.length;i++){
+  away_scores.push([(away_dates[i]), parseFloat(real_away_scores[i])])
+}
 
 document.addEventListener('DOMContentLoaded', function () {
-  const chart = Highcharts.chart('chart', {
+  const chart = Highcharts.chart('charter', {
       chart: {
           type: 'line'
       },
@@ -31,31 +65,20 @@ document.addEventListener('DOMContentLoaded', function () {
           text: 'Daily impact score'
       },
       xAxis: {
-          categories: timeline
-      },
-      yAxis: {
-          title: {
-              text: 'Scores'
-          },
-          min: 0
-      },
-      tooltip: {
-        headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-      },
-      plotOptions: {
-        series: {
-          marker: {
-            enabled: true
-          }
+        type: 'datetime',
+        dateTimeLabelFormats: { // don't display the dummy year
+            month: '%e. %b',
+        },
+        title: {
+            text: 'Date'
         }
-      },
+    },
       series: [{
           name: 'Your score',
-          data: away_scores
+          data: home_scores
       }, {
           name: away_name +'\'s score',
-          data: home_scores
+          data: away_scores
       }]
   });
 });

@@ -10,9 +10,6 @@ from .models import Checkin, Serving, Profile, User
 def home(request):
     return render(request, 'pages/home.html')
 
-def about(request):
-    return render(request, 'pages/about.html')
-
 @login_required
 def profilepage(request):
     today = datetime.date.today()
@@ -123,22 +120,22 @@ def compare(request):
     user_checkins = []
     compare_checkins = []
 
-    for day in timeline:
-        if Checkin.objects.filter(profile=user.first().profile, date=day):
-            user_checkins.append(Checkin.objects.get(profile=user.first().profile, date=day))
-        else:
-            user_checkins.append(None)
+    # for day in timeline:
+    #     if Checkin.objects.filter(profile=user.first().profile, date=day):
+    #         user_checkins.append(Checkin.objects.get(profile=user.first().profile, date=day))
+    #     else:
+    #         user_checkins.append(None)
 
-        if Checkin.objects.filter(profile=request.user.profile, date=day):
-            compare_checkins.append(Checkin.objects.get(profile=request.user.profile, date=day))
-        else:
-            compare_checkins.append(None)
+    #     if Checkin.objects.filter(profile=request.user.profile, date=day):
+    #         compare_checkins.append(Checkin.objects.get(profile=request.user.profile, date=day))
+    #     else:
+    #         compare_checkins.append(None)
 
     # print(user_checkins, compare_checkins)
 
     context = {
         'timeline':timeline,
-        'user_checkins':user_checkins,
-        'compare_checkins':compare_checkins,
+        'away':away,
+        'home':home,
     }
     return render(request, 'pages/compare.html', context)

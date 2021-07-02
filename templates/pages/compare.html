@@ -4,13 +4,13 @@
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock %}
 {% block content %}
-<div id="charter">
+<div id="chart">
   <form action="{% url 'compare' %}" method="POST" id="compare">
     {% csrf_token %}
     <input type="search" value="Enter user to compare with" name="compare">
     <button  type="submit" id="submit" form="compare">Compare</button>
   </form>
-  <div id="chart"></div>
+  <div id="charter"></div>
 </div>
 
 <div id="data">
@@ -18,7 +18,17 @@
     <p class="timeline">{{date}}</p>
   {% endfor %}
   <p id="away_name">{{away.first.profile}}</p>
-  {% for checkin in compare_checkins %}
+  {% for post in home %}
+  <p class="home_date">{{post.date.year}} {{post.date.month}} {{post.date.day}}</p>
+  <p class="home_score">{{post.score}}</p>
+  {% endfor %}
+
+  {% for post in away %}
+    <p class="away_date">{{post.date.year}} {{post.date.month}} {{post.date.day}}</p>
+    <p class="away_score">{{post.score}}</p>
+  {% endfor %}
+
+  <!-- {% for checkin in compare_checkins %}
     {% if checkin is None %}
       <p class="away_score">null</p>
     {% else %}
@@ -35,7 +45,7 @@
       <p class="home_score">{{ checkin.score }}</p>
     {% endif %}
   {% endfor %}
-</div>
+</div> -->
 
 <script src="../../static/js/compare.js"></script>
 
