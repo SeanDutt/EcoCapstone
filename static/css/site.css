@@ -21,6 +21,10 @@ body{
   /* background by SVGBackgrounds.com */
 }
 
+span{
+  font-size: larger;
+}
+
 li{
   list-style: none;
 }

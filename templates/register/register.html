@@ -6,16 +6,16 @@
 {% block content %}
 
 <form action="" method="POST">
-  <div id='author-form' class="form-group">
+  <div>
     {% csrf_token %}
     <label for="username">Username</label>
-    <input class="form-control" type="text" name="username">
+    <input type="text" name="username">
     <label for="password">Password</label>
-    <input class="form-control" type="password" name="password">
+    <input type="password" name="password">
     <label for="email">Email</label>
-    <input class="form-control" type="text" name="email">
-    <small id="emailHelp" class="form-text text-muted">I promise to never share your email with anyone else.</small><br>
-    <button type="submit" class="btn btn-primary mb-2 mt-3">Submit</button>
+    <input type="text" name="email">
+    <small id="emailHelp">I promise to never share your email with anyone else.</small><br>
+    <button type="submit">Submit</button>
   </div>
 </form>
 

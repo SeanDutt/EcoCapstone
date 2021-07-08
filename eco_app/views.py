@@ -15,6 +15,8 @@ def profilepage(request):
     today = datetime.date.today()
     d = today.strftime("%Y-%m-%d")
 
+    users = User.objects.all()
+
     contScores = []
     for checkin in Checkin.objects.all():
         if str(checkin.date) == d:
@@ -48,9 +50,88 @@ def profilepage(request):
         'contScores':contScores,
         'zipScores':zipScores,
         'incomeScores':incomeScores,
-        'checkins':checkins
+        'checkins':checkins,
+        'users':users,
     }
     return render(request, 'pages/profile.html', context)
+
+@login_required
+def other_profile(request, username):
+    user = User.objects.get(username=username)
+
+    today = datetime.date.today()
+    d = today.strftime("%Y-%m-%d")
+
+    contScores = []
+    for checkin in Checkin.objects.all():
+        if str(checkin.date) == d:
+            if checkin.profile.continent == user.profile.continent:
+                contScores.append(checkin)
+
+
+    zipScores = []
+    for checkin in Checkin.objects.all():
+        if str(checkin.date) == d:
+            if checkin.profile.zipCode == user.profile.zipCode:
+                zipScores.append(checkin)
+
+
+    incomeScores = []
+    for checkin in Checkin.objects.all():
+        if str(checkin.date) == d:
+            if checkin.profile.income == user.profile.income:
+                incomeScores.append(checkin)
+
+    checkins = Checkin.objects.filter(profile=user.profile)
+    avg = 0
+    for checkin in checkins:
+        avg += checkin.score
+    
+    if len(checkins):
+        avg = round(avg / len(checkins), 2)
+
+    context = {
+        'user':user,
+        'avg':avg,
+        'contScores':contScores,
+        'zipScores':zipScores,
+        'incomeScores':incomeScores,
+        'checkins':checkins
+    }
+    return render(request, 'pages/other_profile.html', context)
+
+@login_required
+def compare(request, username):
+    user = User.objects.get(username=username)
+    away = Checkin.objects.filter(profile=user.profile)
+    home = Checkin.objects.filter(profile=request.user.profile)
+
+    if away[0].date <= home[0].date: # Finds the first date checked in between both users
+        first = away[0].date
+    else:
+        first = home[0].date
+
+    if away.last().date <= home.last().date: # Finds the most recent checkin between both users
+        last = home.last().date
+    else:
+        last = away.last().date
+
+    step = datetime.timedelta(days=1)
+    timeline = []
+
+    while first <= last:
+        timeline.append(first)
+        first += step
+
+    user_checkins = []
+    compare_checkins = []
+
+    context = {
+        'timeline':timeline,
+        'away':away,
+        'home':home,
+    }
+    return render(request, 'pages/compare.html', context)
 
 @login_required
 def editProfile(request):
@@ -88,54 +169,12 @@ def add_checkin(request):
     return redirect('checkin')
 
 @login_required
-def compare(request):
-    user = User.objects.filter(username=request.POST.get("compare"))
-    away = Checkin.objects.filter(profile=user.first().profile)
-    home = Checkin.objects.filter(profile=request.user.profile)
-
-    # print(away.last().date, home.last().date)
-    if away[0].date <= home[0].date: # Finds the first date checked in between both users
-        first = away[0].date
-    else:
-        first = home[0].date
-
-    # print(first)
-
-    if away.last().date <= home.last().date: # Finds the most recent checkin between both users
-        last = home.last().date
-    else:
-        last = away.last().date
-
-    # print(last)
-
-    step = datetime.timedelta(days=1)
-    timeline = []
-
-    while first <= last:
-        timeline.append(first)
-        first += step
-
-    # print(timeline)
-
-    user_checkins = []
-    compare_checkins = []
-
-    # for day in timeline:
-    #     if Checkin.objects.filter(profile=user.first().profile, date=day):
-    #         user_checkins.append(Checkin.objects.get(profile=user.first().profile, date=day))
-    #     else:
-    #         user_checkins.append(None)
-
-    #     if Checkin.objects.filter(profile=request.user.profile, date=day):
-    #         compare_checkins.append(Checkin.objects.get(profile=request.user.profile, date=day))
-    #     else:
-    #         compare_checkins.append(None)
-
-    # print(user_checkins, compare_checkins)
+def user_index(request):
+    user_list = User.objects.all()
 
     context = {
-        'timeline':timeline,
-        'away':away,
-        'home':home,
+        'user_list':user_list
     }
-    return render(request, 'pages/compare.html', context)
+
+    return render(request, 'pages/index.html', context)
+

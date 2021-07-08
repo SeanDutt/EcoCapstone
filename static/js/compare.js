@@ -10,8 +10,8 @@ let dates = document.getElementsByClassName("timeline")
 
 timeline = []
 
-for (date of dates){
-  timeline.push(date.innerHTML)
+for (day of dates){
+  timeline.push(day.innerHTML)
 }
 
 real_home_scores = []
@@ -56,6 +56,8 @@ for (i=0;i<real_away_scores.length;i++){
   away_scores.push([(away_dates[i]), parseFloat(real_away_scores[i])])
 }
 
+
+
 document.addEventListener('DOMContentLoaded', function () {
   const chart = Highcharts.chart('charter', {
       chart: {
@@ -67,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
       xAxis: {
         type: 'datetime',
         dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e. %b',
+            month: '%b. %e',
         },
         title: {
             text: 'Date'

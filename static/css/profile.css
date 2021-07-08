@@ -1,128 +1,171 @@
 .container {
-  display: grid; 
-  grid-template-columns: 1fr; 
-  grid-template-rows: 0.5fr 1.5fr; 
-  gap: 0px 0px; 
-  grid-template-areas: 
-    "header"
-    "pic"
-    "info"
-    "charts"; 
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 0.5fr 1.5fr;
+	gap: 0px 0px;
+	grid-template-areas:
+		'header'
+		'pic'
+		'info'
+		'charts';
 }
 
-.container > *{
-  margin: auto;
+.container > * {
+	margin: auto;
 }
 
 .pic {
-  grid-area: pic;
-  padding: 15px;
+	grid-area: pic;
+	padding: 15px;
 }
 
 .info {
-  grid-area: info;
-  margin-bottom: 16px;
+	grid-area: info;
+	margin-bottom: 16px;
 }
 
 .charts {
-  display: grid; 
-  grid-template-columns: 1fr; 
-  grid-template-rows: repeat(2, 36px 1fr) 100px; 
-  gap: 0px 0px; 
-  grid-template-areas: 
-    "."
-    "."; 
-  grid-area: charts; 
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: repeat(2, 36px 1fr) 100px;
+	gap: 0px 0px;
+	grid-template-areas:
+		'.'
+		'.';
+	grid-area: charts;
 }
-.header { grid-area: header; }
+.header {
+	grid-area: header;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
 
 .charts div {
-  height: 300px;
-  margin: 0 0 4rem 0;
+	height: 300px;
+	margin: 0 0 4rem 0;
 }
 
 .pic img {
-  border: 1px solid black;
-  border-radius: 33%;
-  height: 300px;
-  width: 300px;
+	border: 1px solid black;
+	border-radius: 33%;
+	height: 300px;
+	width: 300px;
 }
 
 .header {
-  grid-area: header;
-  text-align: center;
+	grid-area: header;
+	text-align: center;
 }
 
-.info { grid-area: info; }
+.info {
+	grid-area: info;
+}
 
-.chart, #charter {
-  border: 3px solid black;
-  opacity: 95%;
+.chart,
+#charter {
+	border: 3px solid black;
+	opacity: 95%;
 }
 
 #data p {
-  visibility: hidden;
-  height: 0;
-  width: 0;
+	visibility: hidden;
+	height: 0;
+	width: 0;
 }
 
 .btn-group button {
-  background-color: #04AA6D;
-  border: 1px solid green;
-  color: white;
-  padding: 10px 24px;
-  cursor: pointer;
-  float: left;
+	background-color: #04aa6d;
+	border: 1px solid green;
+	color: white;
+	padding: 10px 24px;
+	cursor: pointer;
+	float: left;
 }
 
 .btn-group button:not(:last-child) {
-  border-right: none;
+	border-right: none;
 }
 
-.btn-group button:hover{
-  background-color: #3e8e41;
+.btn-group button:hover {
+	background-color: #3e8e41;
 }
 
-#last7, #last28, #zipchart, #incomechart{
-  visibility: hidden;
+#last7,
+#last28,
+#zipchart,
+#incomechart {
+	visibility: hidden;
 }
 
-#togglecharts > *, #profileCharts > *{
-  position: absolute;
-  width: 66.7%;
+#togglecharts > *,
+#profileCharts > * {
+	position: absolute;
+	width: 66.7%;
 }
 
-form > *{
-  width: 98%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: large;
+form > * {
+	width: 98%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: large;
 }
 
 #charter {
-  width: 97.5%;
+	width: 97.5%;
 }
 
-#compareContainer > *{
-  text-align: center;
+#myInput {
+	width: 75%;
+	font-size: 16px;
+	padding: 12px 20px 12px 20px;
+	border: 1px solid #ddd;
+	margin-bottom: 12px;
+}
+
+#user-data {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+#user-data li {
+	height: 0px;
+	visibility: hidden;
+}
+
+#user-data li a {
+	border: 1px solid black; /* Add a border to all links */
+	margin-top: -1px; /* Prevent double borders */
+	background-color: #f6f6f6; /* Grey background color */
+	padding: 12px; /* Add some padding */
+	text-decoration: none; /* Remove default text underline */
+	font-size: 18px; /* Increase the font-size */
+	display: block;
+	width: 80%;
+}
+
+#user-data li a:hover:not(.header) {
+	background-color: #eee; /* Add a hover effect to all links, except for headers */
 }
 
 @media only screen and (min-width: 1066px) {
-  .container {
-    display: grid; 
-    grid-template-columns: 0.5fr 1.5fr; 
-    grid-template-rows: 0.5fr 1.5fr; 
-    gap: 0px 0px; 
-    grid-template-areas: 
-      "pic header"
-      "info charts"; 
-  }
-  
-  .container > *{
-    margin: 0;
-  }
-  }
+	.container {
+		display: grid;
+		grid-template-columns: 0.5fr 1.5fr;
+		grid-template-rows: 0.5fr 1.5fr;
+		gap: 0px 0px;
+		grid-template-areas:
+			'pic header'
+			'info charts';
+	}
+
+	.container > * {
+		margin: 0;
+	}
+}

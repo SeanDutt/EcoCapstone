@@ -33,14 +33,13 @@ h2:active, #submit:active{
 
 #container{
   width: 100%;
-  display:inline-grid;
+  display: grid;
   text-align: center;
   justify-content: center;
 }
 
 #container li{
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 0.5fr 1.5fr;
   gap: 0px 0px;
   grid-template-areas:
