@@ -10,6 +10,7 @@ from .models import Checkin, Serving, Profile, User
 def home(request):
     return render(request, 'pages/home.html')
 
+
 @login_required
 def profilepage(request):
     today = datetime.date.today()
@@ -23,13 +24,11 @@ def profilepage(request):
             if checkin.profile.continent == request.user.profile.continent:
                 contScores.append(checkin)
 
-
     zipScores = []
     for checkin in Checkin.objects.all():
         if str(checkin.date) == d:
             if checkin.profile.zipCode == request.user.profile.zipCode:
                 zipScores.append(checkin)
-
 
     incomeScores = []
     for checkin in Checkin.objects.all():
@@ -41,19 +40,20 @@ def profilepage(request):
     avg = 0
     for checkin in checkins:
         avg += checkin.score
-    
+
     if len(checkins):
         avg = round(avg / len(checkins), 2)
 
     context = {
-        'avg':avg,
-        'contScores':contScores,
-        'zipScores':zipScores,
-        'incomeScores':incomeScores,
-        'checkins':checkins,
-        'users':users,
+        'avg': avg,
+        'contScores': contScores,
+        'zipScores': zipScores,
+        'incomeScores': incomeScores,
+        'checkins': checkins,
+        'users': users,
     }
     return render(request, 'pages/profile.html', context)
+
 
 @login_required
 def other_profile(request, username):
@@ -68,13 +68,11 @@ def other_profile(request, username):
             if checkin.profile.continent == user.profile.continent:
                 contScores.append(checkin)
 
-
     zipScores = []
     for checkin in Checkin.objects.all():
         if str(checkin.date) == d:
             if checkin.profile.zipCode == user.profile.zipCode:
                 zipScores.append(checkin)
-
 
     incomeScores = []
     for checkin in Checkin.objects.all():
@@ -86,19 +84,20 @@ def other_profile(request, username):
     avg = 0
     for checkin in checkins:
         avg += checkin.score
-    
+
     if len(checkins):
         avg = round(avg / len(checkins), 2)
 
     context = {
-        'user':user,
-        'avg':avg,
-        'contScores':contScores,
-        'zipScores':zipScores,
-        'incomeScores':incomeScores,
-        'checkins':checkins
+        'user': user,
+        'avg': avg,
+        'contScores': contScores,
+        'zipScores': zipScores,
+        'incomeScores': incomeScores,
+        'checkins': checkins
     }
     return render(request, 'pages/other_profile.html', context)
+
 
 @login_required
 def compare(request, username):
@@ -106,12 +105,12 @@ def compare(request, username):
     away = Checkin.objects.filter(profile=user.profile)
     home = Checkin.objects.filter(profile=request.user.profile)
 
-    if away[0].date <= home[0].date: # Finds the first date checked in between both users
+    if away[0].date <= home[0].date:  # Finds the first date checked in between both users
         first = away[0].date
     else:
         first = home[0].date
 
-    if away.last().date <= home.last().date: # Finds the most recent checkin between both users
+    if away.last().date <= home.last().date:  # Finds the most recent checkin between both users
         last = home.last().date
     else:
         last = away.last().date
@@ -123,15 +122,13 @@ def compare(request, username):
         timeline.append(first)
         first += step
 
-    user_checkins = []
-    compare_checkins = []
-
     context = {
-        'timeline':timeline,
-        'away':away,
-        'home':home,
+        'timeline': timeline,
+        'away': away,
+        'home': home,
     }
     return render(request, 'pages/compare.html', context)
+
 
 @login_required
 def editProfile(request):
@@ -140,11 +137,21 @@ def editProfile(request):
 
     if request.method == 'POST':
         user = Profile.objects.filter(user=request.user).first()
-        user.zipCode = request.POST.get("zip")
-        user.continent = request.POST.get("continent")
-        user.income = request.POST.get("income")
+        if request.POST.get("zip") != "":
+            user.zipCode = request.POST.get("zip")
+
+        if request.POST.get("continent") != "":
+            user.continent = request.POST.get("continent")
+
+        if request.POST.get("income") != "":
+            user.income = request.POST.get("income")
+
+        if request.POST.get("img"):
+            user.profile_pic = request.POST.get("img")
         user.save()
+
         return profilepage(request)
+
 
 @login_required
 def checkinpage(request):
@@ -163,18 +170,18 @@ def add_checkin(request):
         Serving.objects.create(container=checkin, key=item, value=int(check))
 
     checkin.profile = request.user.profile
-    checkin.score = footprint
+    checkin.score = round(footprint, 2)
     checkin.save()
 
     return redirect('checkin')
+
 
 @login_required
 def user_index(request):
     user_list = User.objects.all()
 
     context = {
-        'user_list':user_list
+        'user_list': user_list
     }
 
     return render(request, 'pages/index.html', context)
-

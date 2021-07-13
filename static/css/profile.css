@@ -63,7 +63,7 @@
 	grid-area: info;
 }
 
-.chart,
+.chart, 
 #charter {
 	border: 3px solid black;
 	opacity: 95%;

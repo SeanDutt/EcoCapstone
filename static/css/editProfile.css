@@ -1,0 +1,10 @@
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: fit-content;
+}
+form input, select {
+  margin-bottom: 16px;
+  width: 100%;
+}

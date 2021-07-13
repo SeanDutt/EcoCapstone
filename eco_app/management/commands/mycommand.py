@@ -48,9 +48,9 @@ class Command(BaseCommand):
       profile.income = self.income()
       profile.save()
 
-      start_date = date(2021, 6, 1)
-      end_date = date(2021, 7, 16)
+      start_date = date(2021, 3, 1)
+      end_date = date(2021, 7, 17)
 
       for day in self.daterange(start_date, end_date):
-        Checkin.objects.create(profile=profile, date=day, score=r.randint(1, 20))
+        Checkin.objects.create(profile=profile, date=day, score=r.randint(1, 15))
 
