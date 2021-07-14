@@ -40,12 +40,14 @@ def profilepage(request):
 
     if Checkin.objects.filter(profile=request.user.profile):
         checkins = Checkin.objects.filter(profile=request.user.profile)
-    avg = 0
-    for checkin in checkins:
-        avg += checkin.score
 
-    if len(checkins):
-        avg = round(avg / len(checkins), 2)
+        avg = 0
+        
+        for checkin in checkins:
+            avg += checkin.score
+
+        if len(checkins):
+            avg = round(avg / len(checkins), 2)
 
     context = {
         'avg': avg,
