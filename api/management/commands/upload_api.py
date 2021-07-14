@@ -4,7 +4,7 @@ import csv
 
 class Command(BaseCommand):
   def handle(self, *args, **kwargs):
-      with open('food.csv') as csv_file:
+      with open(food.csv) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
