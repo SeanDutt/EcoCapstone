@@ -5,21 +5,31 @@ from django.dispatch import receiver
 import datetime
 from django.db.models.deletion import PROTECT
 
-# CONTINENTS = (
-#     ('Asia','Asia'),
-#     ('Africa', 'Africa'),
-#     ('Europe','Europe'),
-#     ('North America','North America'),
-#     ('South America','South America'),
-#     ('Australia/Oceania','Australia/Oceania'),
-#     ('Antarctica','Antarctica'),
-# )
+CONTINENTS = (
+    ('Asia','Asia'),
+    ('Africa', 'Africa'),
+    ('Europe','Europe'),
+    ('North America','North America'),
+    ('South America','South America'),
+    ('Australia/Oceania','Australia/Oceania'),
+    ('Antarctica','Antarctica'),
+)
+
+INCOME_LEVELS = (
+    ('0 to 10k','0 to 10k'),
+    ('10k to 20k', '10k to 20k'),
+    ('20k to 40k','20k to 40k'),
+    ('40k to 60k','40k to 60k'),
+    ('60k to 80k','60k to 80k'),
+    ('80k to 100k','80k to 100k'),
+    ('Over 150k','Over 150k'),
+)
 
 class Profile(models.Model):
   user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
   zipCode = models.CharField(max_length=10, null=True, blank=True, default="12345")
-  continent = models.CharField(max_length=20, null=True, blank=True, default="Asia")
-  income = models.CharField(max_length=25, null=True, blank=True, default="0 to 10k")
+  continent = models.CharField(choices=CONTINENTS, max_length=20, null=True, blank=True, default="Asia")
+  income = models.CharField(choices=INCOME_LEVELS, max_length=25, null=True, blank=True, default="0 to 10k")
   profile_pic = models.ImageField(null=True, blank=True, upload_to='images/', default='images/default.jpg')
 
   def __str__(self):

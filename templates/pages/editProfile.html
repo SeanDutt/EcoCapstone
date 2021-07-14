@@ -7,37 +7,10 @@
 <div class="container">
   <form action="{% url 'editProfile' %}" method="POST" id="editProfile">
     {% csrf_token %}
-    <label for="zip">Your ZIP</label><br>
-    <input id="zip" type="text" name="zip"><br>
-
-    <label for="continent">Your continent</label><br>
-    <select name="continent" id="continent">
-      <option value=""></option>
-      <option value="Asia">Asia</option>
-      <option value="Africa">Africa</option>
-      <option value="Europe">Europe</option>
-      <option value="North America">North America</option>
-      <option value="South America">South America</option>
-      <option value="Australia/Oceania">Australia/Oceania</option>
-      <option value="Antarctica">Antarctica</option>
-    </select><br>
-
-    <label for="income">Estimated income</label><br>
-    <select name="income" id="income">
-      <option value=""></option>
-      <option value="0 to 10k">0 to 10k</option>
-      <option value="10k to 20k">10k to 20k</option>
-      <option value="20k to 40k">20k to 40k</option>
-      <option value="40k to 60k">40k to 60k</option>
-      <option value="60k to 80k">60k to 80k</option>
-      <option value="80k to 100k">80k to 100k</option>
-      <option value="100k to 150k">100k to 150k</option>
-      <option value="Over 150k">Over 150k</option>
-    </select><br>
-
-    <label for="profile pic">Profile picture</label><br>
-    <input type="file" id="img" name="img" accept="image/*">
-
+    <table>
+      {{ form.as_table }}
+      {{ profile_form.as_table }}
+    </table>
     <button  type="submit" id="submit">Update!</button>
   </form>
 </div>

@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 import datetime
-
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from .forms import ProfileForm, EditProfileForm
 from .models import Checkin, Serving, Profile, User
 
 
@@ -131,26 +133,54 @@ def compare(request, username):
 
 
 @login_required
-def editProfile(request):
+def editProfile(request, pk):
+    user = User.objects.get(pk=pk)
+    form = ProfileForm(instance=user)
+
     if request.method == 'GET':
         return render(request, 'pages/editProfile.html')
 
     if request.method == 'POST':
-        user = Profile.objects.filter(user=request.user).first()
-        if request.POST.get("zip") != "":
-            user.zipCode = request.POST.get("zip")
+        user = User.objects.get(pk=pk)
+        profile = user.profile
+        form = ProfileForm(instance=profile)
 
-        if request.POST.get("continent") != "":
-            user.continent = request.POST.get("continent")
+        if request.user.is_authenticated() and request.user.id == user.id:
+            if request.method == "POST":
+                form = ProfileForm(request.POST, request.FILES, instance=profile)
 
-        if request.POST.get("income") != "":
-            user.income = request.POST.get("income")
+    return render(request, 'pages/edit_profile.html', {'form': form})
 
-        if request.POST.get("img"):
-            user.profile_pic = request.POST.get("img")
-        user.save()
+# @login_required
+# def editProfile(request):
+#     if request.method == 'GET':
+#         return render(request, 'pages/editProfile.html')
 
-        return profilepage(request)
+#     if request.method == 'POST':
+#         user = Profile.objects.filter(user=request.user).first()
+#         if request.POST.get("zip") != "":
+#             user.zipCode = request.POST.get("zip")
+
+#         if request.POST.get("continent") != "":
+#             user.continent = request.POST.get("continent")
+
+#         if request.POST.get("income") != "":
+#             user.income = request.POST.get("income")
+
+#         if request.POST.get("img"):
+#             myfile = request.FILES['myfile']
+#             fs = FileSystemStorage()
+#             filename = fs.save(myfile.name, myfile)
+#             uploaded_file_url = fs.url(filename)
+
+#             user.profile_pic = uploaded_file_url
+#             return render(request, 'pages/editProfile.html', {
+#             'uploaded_file_url': uploaded_file_url
+#             })
+
+#         user.save()
+
+#         return profilepage(request)
 
 
 @login_required
