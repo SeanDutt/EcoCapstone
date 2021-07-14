@@ -8,5 +8,6 @@ class Command(BaseCommand):
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
-            Impact.objects.create(item={row[0]},co2PerUnit=float({row[1]}))
-            line_count += 1
+          print(row)
+          # Impact.objects.create(item={row[0]},co2PerUnit=float({row[1]}))
+          line_count += 1
