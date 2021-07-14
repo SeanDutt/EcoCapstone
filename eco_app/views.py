@@ -39,15 +39,13 @@ def profilepage(request):
                 incomeScores.append(checkin)
 
     avg = 0
+    checkins = Checkin.objects.filter(profile=request.user.profile)
 
-    if Checkin.objects.filter(profile=request.user.profile):
-        checkins = Checkin.objects.filter(profile=request.user.profile)
+    for checkin in checkins:
+        avg += checkin.score
 
-        for checkin in checkins:
-            avg += checkin.score
-
-        if len(checkins):
-            avg = round(avg / len(checkins), 2)
+    if len(checkins):
+        avg = round(avg / len(checkins), 2)
 
     context = {
         'avg': avg,
