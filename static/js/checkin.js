@@ -31,7 +31,7 @@ function AddCounter(id) {
 	return li;
 }
 
-fetch('http://localhost:8000/api/impacts/')
+fetch('/api/impacts/')
 	.then((response) => response.json())
 	.then((data) => (obj = data))
 	.then(() => {
