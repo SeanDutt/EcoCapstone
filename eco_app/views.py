@@ -38,7 +38,8 @@ def profilepage(request):
             if checkin.profile.income == request.user.profile.income:
                 incomeScores.append(checkin)
 
-    checkins = Checkin.objects.filter(profile=request.user.profile)
+    if Checkin.objects.filter(profile=request.user.profile):
+        checkins = Checkin.objects.filter(profile=request.user.profile)
     avg = 0
     for checkin in checkins:
         avg += checkin.score
