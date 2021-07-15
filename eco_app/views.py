@@ -5,9 +5,11 @@ from django.shortcuts import redirect, render
 import datetime
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-from .forms import ProfileForm, EditProfileForm
+from django import forms
+from django.http import HttpResponse
+from .forms import ProfileForm
 from .models import Checkin, Serving, Profile, User
-
+from cloudinary import *
 
 def home(request):
     return render(request, 'pages/home.html')
@@ -133,55 +135,50 @@ def compare(request, username):
     return render(request, 'pages/compare.html', context)
 
 
-@login_required
-def editProfile(request, pk):
-    user = User.objects.get(pk=pk)
-    form = ProfileForm(instance=user)
-
-    if request.method == 'GET':
-        return render(request, 'pages/editProfile.html')
-
-    if request.method == 'POST':
-        user = User.objects.get(pk=pk)
-        profile = user.profile
-        form = ProfileForm(instance=profile)
-
-        if request.user.is_authenticated() and request.user.id == user.id:
-            if request.method == "POST":
-                form = ProfileForm(request.POST, request.FILES, instance=profile)
-
-    return render(request, 'pages/edit_profile.html', {'form': form})
-
 # @login_required
-# def editProfile(request):
+# def editProfile(request, pk):
+#     user = User.objects.get(pk=pk)
+#     form = ProfileForm(instance=user)
+
 #     if request.method == 'GET':
 #         return render(request, 'pages/editProfile.html')
 
 #     if request.method == 'POST':
-#         user = Profile.objects.filter(user=request.user).first()
-#         if request.POST.get("zip") != "":
-#             user.zipCode = request.POST.get("zip")
+#         user = User.objects.get(pk=pk)
+#         profile = user.profile
+#         form = ProfileForm(instance=profile)
 
-#         if request.POST.get("continent") != "":
-#             user.continent = request.POST.get("continent")
+#         if request.user.is_authenticated() and request.user.id == user.id:
+#             if request.method == "POST":
+#                 form = ProfileForm(request.POST, request.FILES, instance=profile)
 
-#         if request.POST.get("income") != "":
-#             user.income = request.POST.get("income")
+#     return render(request, 'pages/edit_profile.html', {'form': form})
 
-#         if request.POST.get("img"):
-#             myfile = request.FILES['myfile']
-#             fs = FileSystemStorage()
-#             filename = fs.save(myfile.name, myfile)
-#             uploaded_file_url = fs.url(filename)
+@login_required
+def editProfile(request):
+    if request.method == 'GET':
+        return render(request, 'pages/editProfile.html')
 
-#             user.profile_pic = uploaded_file_url
-#             return render(request, 'pages/editProfile.html', {
-#             'uploaded_file_url': uploaded_file_url
-#             })
+    if request.method == 'POST':
+        user = Profile.objects.filter(user=request.user).first()
+        if request.POST.get("zip") != "":
+            user.zipCode = request.POST.get("zip")
 
-#         user.save()
+        if request.POST.get("continent") != "":
+            user.continent = request.POST.get("continent")
 
-#         return profilepage(request)
+        if request.POST.get("income") != "":
+            user.income = request.POST.get("income")
+
+        if request.POST.get("img"):
+            pic = ProfileForm(request.POST, request.FILES)
+            context['posted'] = form.instance
+            if form.is_valid():
+                user.profile_pic = pic
+
+        user.save()
+
+        return profilepage(request)
 
 
 @login_required
