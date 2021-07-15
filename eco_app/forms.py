@@ -27,4 +27,4 @@ class ProfileForm(ModelForm):
   zip = forms.CharField(label='Zip code', max_length=10)
   continent = forms.ChoiceField(choices=CONTINENTS)
   income = forms.ChoiceField(choices=INCOME_LEVELS)
-  pic = forms.ImageField()
+  img = forms.ImageField()

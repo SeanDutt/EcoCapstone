@@ -161,16 +161,16 @@ def editProfile(request):
         if form.is_valid():
             user = Profile.objects.filter(user=request.user).first()
             if request.POST.get("zip") != "":
-                user.zipCode = request.POST.get("zip")
+                user.zipCode = form.cleaned_data['zip']
 
             if request.POST.get("continent") != "":
-                user.continent = request.POST.get("continent")
+                user.continent = form.cleaned_data['continent']
 
             if request.POST.get("income") != "":
-                user.income = request.POST.get("income")
+                user.income = form.cleaned_data['income']
 
             if request.POST.get("img"):
-                pic = request.FILES
+                pic = form.cleaned_data['img']
                 user.profile_pic = pic
 
             user.save()
