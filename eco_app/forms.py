@@ -3,6 +3,7 @@ from .models import *
 from django.forms import ModelForm
 
 CONTINENTS = (
+    ('',''),
     ('Asia','Asia'),
     ('Africa', 'Africa'),
     ('Europe','Europe'),
@@ -13,6 +14,7 @@ CONTINENTS = (
 )
 
 INCOME_LEVELS = (
+    ('',''),
     ('0 to 10k','0 to 10k'),
     ('10k to 20k', '10k to 20k'),
     ('20k to 40k','20k to 40k'),
@@ -23,7 +25,7 @@ INCOME_LEVELS = (
 )
 
 class ProfileForm(forms.Form):
-  zip = forms.CharField(label='Zip code', max_length=10)
-  continent = forms.ChoiceField(label='Continent', choices=CONTINENTS)
-  income = forms.ChoiceField(label='Income', choices=INCOME_LEVELS)
-  img = forms.ImageField(label='Profile picture')
+  class Meta:
+    model = Profile
+    fields = ['zipCode', 'continent', 'income', 'profile_pic']
+    exclude = ['user']

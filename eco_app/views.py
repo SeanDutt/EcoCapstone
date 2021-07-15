@@ -161,7 +161,7 @@ def editProfile(request):
         if form.is_valid():
             user = Profile.objects.filter(user=request.user).first()
             if request.POST.get("zip") != "":
-                user.zipCode = form.cleaned_data['zip']
+                user.zipCode = form.cleaned_data['zipCode']
 
             if request.POST.get("continent") != "":
                 user.continent = form.cleaned_data['continent']
@@ -170,7 +170,7 @@ def editProfile(request):
                 user.income = form.cleaned_data['income']
 
             if request.POST.get("img"):
-                pic = form.cleaned_data['img']
+                pic = form.cleaned_data['profile_pic']
                 user.profile_pic = pic
 
             user.save()
@@ -184,6 +184,9 @@ def editProfile(request):
 @login_required
 def checkinpage(request):
     if request.method == 'GET':
+        # today = datetime.date.today()
+        # if Checkin.objects.get(user=request.user, date=today):
+        #    
         return render(request, 'pages/checkin.html')
 
 
