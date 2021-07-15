@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'accounts',
     'api',
     'rest_framework',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -133,10 +134,21 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': CLOUD_NAME,
-    'API_KEY': API_KEY,
-    'API_SECRET': API_SECRET,
+# Development
+
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': CLOUD_NAME,
+#     'API_KEY': API_KEY,
+#     'API_SECRET': API_SECRET,
+# }
+#----------
+
+# Production
+
+CLOUDINARY_STORAGE ={
+  'CLOUD_NAME': os.environ.get("CLOUD_NAME"), 
+  'API_KEY': os.environ.get("API_KEY"),
+  'API_SECRET': os.environ.get("API_SECRET")
 }
 
 # Default primary key field type
