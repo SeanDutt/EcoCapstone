@@ -7,10 +7,7 @@
 <div class="container">
   <form action="{% url 'editProfile' %}" method="POST" id="editProfile">
     {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-      {{ profile_form.as_table }}
-    </table>
+    {{ form }}
     <button  type="submit" id="submit">Update!</button>
   </form>
 </div>

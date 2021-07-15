@@ -160,25 +160,28 @@ def editProfile(request):
         return render(request, 'pages/editProfile.html')
 
     if request.method == 'POST':
-        user = Profile.objects.filter(user=request.user).first()
-        if request.POST.get("zip") != "":
-            user.zipCode = request.POST.get("zip")
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            user = Profile.objects.filter(user=request.user).first()
+            if request.POST.get("zip") != "":
+                user.zipCode = request.POST.get("zip")
 
-        if request.POST.get("continent") != "":
-            user.continent = request.POST.get("continent")
+            if request.POST.get("continent") != "":
+                user.continent = request.POST.get("continent")
 
-        if request.POST.get("income") != "":
-            user.income = request.POST.get("income")
+            if request.POST.get("income") != "":
+                user.income = request.POST.get("income")
 
-        if request.POST.get("img"):
-            pic = ProfileForm(request.POST, request.FILES)
-            context['posted'] = form.instance
-            if form.is_valid():
+            if request.POST.get("img"):
+                pic = request.FILES
                 user.profile_pic = pic
 
-        user.save()
+            user.save()
+            return profilepage(request)
+        else:
+            form = ProfileForm()
 
-        return profilepage(request)
+        return render(request, 'pages/editProfile.html', {'form': form})
 
 
 @login_required
