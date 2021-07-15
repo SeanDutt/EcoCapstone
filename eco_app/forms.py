@@ -1,7 +1,6 @@
 from django import forms
 from .models import *
 from django.forms import ModelForm
-from cloudinary import *
 
 CONTINENTS = (
     ('Asia','Asia'),
@@ -25,6 +24,6 @@ INCOME_LEVELS = (
 
 class ProfileForm(ModelForm):
   zip = forms.CharField(label='Zip code', max_length=10)
-  continent = forms.ChoiceField(choices=CONTINENTS)
-  income = forms.ChoiceField(choices=INCOME_LEVELS)
-  img = forms.ImageField()
+  continent = forms.ChoiceField(label='Continent', choices=CONTINENTS)
+  income = forms.ChoiceField(label='Income', choices=INCOME_LEVELS)
+  img = forms.ImageField(label='Profile picture')
