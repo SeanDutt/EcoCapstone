@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models.base import Model
 from .models import *
 from django.forms import ModelForm
 
@@ -24,7 +25,7 @@ INCOME_LEVELS = (
     ('Over 150k','Over 150k'),
 )
 
-class ProfileForm(forms.Form):
+class ProfileForm(ModelForm):
   class Meta:
     model = Profile
     exclude = ['user']
