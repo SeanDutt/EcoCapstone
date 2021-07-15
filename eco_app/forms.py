@@ -22,7 +22,7 @@ INCOME_LEVELS = (
     ('Over 150k','Over 150k'),
 )
 
-class ProfileForm(ModelForm):
+class ProfileForm(forms.Form):
   zip = forms.CharField(label='Zip code', max_length=10)
   continent = forms.ChoiceField(label='Continent', choices=CONTINENTS)
   income = forms.ChoiceField(label='Income', choices=INCOME_LEVELS)
