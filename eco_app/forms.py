@@ -27,5 +27,4 @@ INCOME_LEVELS = (
 class ProfileForm(forms.Form):
   class Meta:
     model = Profile
-    fields = ['zipCode', 'continent', 'income', 'profile_pic']
     exclude = ['user']
