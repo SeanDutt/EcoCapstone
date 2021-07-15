@@ -156,9 +156,6 @@ def compare(request, username):
 
 @login_required
 def editProfile(request):
-    if request.method == 'GET':
-        return render(request, 'pages/editProfile.html')
-
     if request.method == 'POST':
         form = ProfileForm(request.POST)
         if form.is_valid():
@@ -178,10 +175,10 @@ def editProfile(request):
 
             user.save()
             return profilepage(request)
-        else:
-            form = ProfileForm()
+    else:
+        form = ProfileForm()
 
-        return render(request, 'pages/editProfile.html', {'form': form})
+    return render(request, 'pages/editProfile.html', {'form': form})
 
 
 @login_required
