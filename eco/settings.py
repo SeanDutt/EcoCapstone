@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from decouple import config
-from EcoCapstone.keys import DJANGO_KEY, CLOUD_NAME, API_KEY, API_SECRET, API_ENVIRONMENT_VARIABLE
+# from EcoCapstone.keys import DJANGO_KEY, CLOUD_NAME, API_KEY, API_SECRET, API_ENVIRONMENT_VARIABLE
 from pathlib import Path
 import os
 
@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = DJANGO_KEY
+SECRET_KEY = os.environ.get("DJANGO_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
