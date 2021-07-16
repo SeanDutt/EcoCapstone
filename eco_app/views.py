@@ -186,7 +186,7 @@ def editProfile(request):
 def checkinpage(request):
     if request.method == 'GET':
         today = datetime.date.today()
-        if Checkin.objects.get(user=request.user, date=today):
+        if Checkin.objects.get(user=request.user.profile, date=today):
             return render(request, 'pages/updatecheckin.html')
 
         else: 
