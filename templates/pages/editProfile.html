@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-  <form action="/editProfile/" method="POST" id="editProfile">
+  <form enctype="multipart/form-data" action="/editProfile/" method="POST" id="editProfile">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Update!">
