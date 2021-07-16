@@ -157,10 +157,10 @@ def compare(request, username):
 @login_required
 def editProfile(request):
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             user = Profile.objects.filter(user=request.user).first()
-            if request.POST.get("zip") != "":
+            if request.POST.get("zip") != None:
                 user.zipCode = form.cleaned_data['zipCode']
 
             if request.POST.get("continent") != "":
@@ -169,7 +169,7 @@ def editProfile(request):
             if request.POST.get("income") != "":
                 user.income = form.cleaned_data['income']
 
-            if request.POST.get("profile_pic") != None:
+            if request.FILES['profile_pic'] != None:
                 user.profile_pic = form.cleaned_data['profile_pic']
 
             user.save()
