@@ -160,19 +160,24 @@ def editProfile(request):
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             user = Profile.objects.filter(user=request.user).first()
-            if request.POST.get("zip") != None:
-                user.zipCode = form.cleaned_data['zipCode']
+            profile = form.save()
+            profile.user = request.user.profile
+            profile.save()
 
-            if request.POST.get("continent") != "":
-                user.continent = form.cleaned_data['continent']
 
-            if request.POST.get("income") != "":
-                user.income = form.cleaned_data['income']
+            # if request.POST.get("zip") != None:
+            #     user.zipCode = form.cleaned_data['zipCode']
 
-            if request.FILES['profile_pic'] != None:
-                user.profile_pic = form.cleaned_data['profile_pic']
+            # if request.POST.get("continent") != "":
+            #     user.continent = form.cleaned_data['continent']
 
-            user.save()
+            # if request.POST.get("income") != "":
+            #     user.income = form.cleaned_data['income']
+
+            # if request.FILES['profile_pic'] != None:
+            #     user.profile_pic = form.cleaned_data['profile_pic']
+
+            # user.save()
             return profilepage(request)
     else:
         form = ProfileForm()
