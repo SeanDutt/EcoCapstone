@@ -1,0 +1,15 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/editProfile.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+  <form action="/updateCheckin/" method="POST" id="updateCheckin">
+    {% csrf_token %}
+    <input type="radio" name="choice" value="Replace checkins">
+    <input type="radio" name="choice" value="Add to checkins">
+    <input type="submit" value="Submit!">
+  </form>
+</div>
+{% endblock %}

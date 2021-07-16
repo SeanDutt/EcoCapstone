@@ -6,6 +6,7 @@ urlpatterns = [
     path('checkin/', views.checkinpage, name = 'checkin'),
     path('profile/', views.profilepage, name = 'profile'),
     path('add_checkin/', views.add_checkin, name = 'add_checkin'),
+    path('updatecheckin/', views.updateCheckin, name = 'updateCheckin'),
     path('compare/<username>', views.compare, name = 'compare'),
     path('editProfile/', views.editProfile, name = 'editProfile'),
     path('index/', views.user_index, name = 'index'),

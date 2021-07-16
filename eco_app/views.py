@@ -160,10 +160,7 @@ def editProfile(request):
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             edits = form.save(commit=False)
-            edits.user = request.user
             edits.save()
-
-
 
             # if request.POST.get("zip") != None:
             #     user.zipCode = form.cleaned_data['zipCode']
@@ -188,10 +185,23 @@ def editProfile(request):
 @login_required
 def checkinpage(request):
     if request.method == 'GET':
-        # today = datetime.date.today()
-        # if Checkin.objects.get(user=request.user, date=today):
-        #    
-        return render(request, 'pages/checkin.html')
+        today = datetime.date.today()
+        if Checkin.objects.get(user=request.user, date=today):
+            return render(request, 'pages/updatecheckin.html')
+
+        else: 
+            return render(request, 'pages/checkin.html')
+
+@login_required
+def updateCheckin(request):
+    if request.method == 'POST':
+        choice = request.POST.get('choice')
+        if choice.value == "Replace checkins":
+            print("replace")
+
+        else:
+            print("tally")
+
 
 
 @login_required
@@ -209,6 +219,42 @@ def add_checkin(request):
     checkin.save()
 
     return redirect('checkin')
+
+    # api_list = Impact.objects.all()
+    # today = datetime.date.today()
+    # footprint = 0
+
+    # def tally(footprint):
+    #     for item in api_list:
+    #         check = request.POST.get(item.item)
+    #         footprint += int(check) * float(item.co2PerUnit)
+    #         Serving.objects.create(container=checkin, key=item, value=int(check))
+
+    # if Checkin.objects.get(user=request.user, date=today):
+
+    #     # ask user if they want to replace or tally
+
+    #     if input == "replace": # deletes all checkins that day, and runs the tally
+    #         tallies = Checkin.objects.filter(user=request.user, date=today)
+    #         for checkin in tallies:
+    #             checkin.delete()
+    #         tally()
+        
+    #     else: # if tally is selected, gets score from all existing checkins that day and tallies from there
+    #         tallies = Checkin.objects.filter(user=request.user, date=today)
+    #         for checkin in tallies:
+    #             footprint += checkin.score
+    #             tally()
+    
+    # else: # if no checkins exist for that day, runs tally
+    #     checkin = Checkin.objects.create(score=0)
+    #     tally()
+
+    # checkin.profile = request.user.profile
+    # checkin.score = round(footprint, 2)
+    # checkin.save()
+
+    # return redirect('checkin')
 
 
 @login_required
