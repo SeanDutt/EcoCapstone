@@ -161,7 +161,7 @@ def editProfile(request):
         if form.is_valid():
             user = Profile.objects.filter(user=request.user).first()
             profile = form.save(commit=False)
-            profile.user = request.user
+            profile.user = user
             profile.save()
 
 
