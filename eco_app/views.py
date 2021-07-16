@@ -160,7 +160,7 @@ def editProfile(request):
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             user = Profile.objects.filter(user=request.user).first()
-            profile = form.save(commite=False)
+            profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
 
