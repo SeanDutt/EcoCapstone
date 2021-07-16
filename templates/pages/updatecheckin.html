@@ -7,8 +7,10 @@
 <div class="container">
   <form action="/updateCheckin/" method="POST" id="updateCheckin">
     {% csrf_token %}
-    <input type="radio" name="choice" value="Replace checkins">
-    <input type="radio" name="choice" value="Add to checkins">
+    <label for="replace">Replace check-ins.</label>
+    <input type="radio" id="replace" name="choice" value="Replace checkins">
+    <label for="tally">Add to check-ins.</label>
+    <input type="radio" id="tally" name="choice" value="Add to checkins">
     <input type="submit" value="Submit!">
   </form>
 </div>

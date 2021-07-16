@@ -23,6 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
+# development
+# SECRET_KEY = 'django-insecure-nbbr=8)2v^+y+$+)1x@8fh8)=3ck1zc(3)at_h06veb--4^_q='
+
+# production
 SECRET_KEY = os.environ.get("DJANGO_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -127,12 +132,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+
+# development
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# production
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
 
 # Development
 
@@ -156,6 +173,6 @@ CLOUDINARY_STORAGE ={
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#django-on-heroku config
+django-on-heroku config
 import django_on_heroku
 django_on_heroku.settings(locals())

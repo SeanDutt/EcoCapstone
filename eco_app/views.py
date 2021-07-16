@@ -1,3 +1,4 @@
+from django.db.models.query import EmptyQuerySet
 from api.models import Impact
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -186,8 +187,9 @@ def editProfile(request):
 def checkinpage(request):
     if request.method == 'GET':
         today = datetime.date.today()
-        if Checkin.objects.get(user=request.user.profile, date=today):
-            return render(request, 'pages/updatecheckin.html')
+
+        if len(Checkin.objects.filter(profile=request.user.profile, date=today)) != 0:
+            return render(request, 'pages/updateCheckin.html')
 
         else: 
             return render(request, 'pages/checkin.html')
@@ -196,29 +198,139 @@ def checkinpage(request):
 def updateCheckin(request):
     if request.method == 'POST':
         choice = request.POST.get('choice')
-        if choice.value == "Replace checkins":
+        if choice == "Replace checkins":
             print("replace")
+            today = datetime.date.today()
+            checkins = Checkin.objects.filter(profile=request.user.profile, date=today)
+            for checkin in checkins:
+                checkin.delete()
+            return render(request, 'pages/checkin.html')
 
         else:
-            print("tally")
+            return render(request, 'pages/tallycheckin.html')
+
+def tallyCheckin(request):
+    if request.method == 'POST':
+        api_list = Impact.objects.all()
+        checkin = Checkin.objects.create(score=0)
+        today = datetime.date.today()
+        footprint = 0
+        tallies = Checkin.objects.filter(profile=request.user.profile, date=today)
+        for tally in tallies:
+            footprint += tally.score
+            tally.delete()
+
+        for item in api_list:
+            check = request.POST.get(item.item)
+            footprint += int(check) * float(item.co2PerUnit)
+            Serving.objects.create(container=checkin, key=item, value=int(check))
+
+        checkin.profile = request.user.profile
+        checkin.score = round(footprint, 2)
+        checkin.save()
+            
+        
+        today = datetime.date.today()
+        d = today.strftime("%Y-%m-%d")
+
+        users = User.objects.all()
+
+        contScores = []
+        for checkin in Checkin.objects.all():
+            if str(checkin.date) == d:
+                if checkin.profile.continent == request.user.profile.continent:
+                    contScores.append(checkin)
+
+        zipScores = []
+        for checkin in Checkin.objects.all():
+            if str(checkin.date) == d:
+                if checkin.profile.zipCode == request.user.profile.zipCode:
+                    zipScores.append(checkin)
+
+        incomeScores = []
+        for checkin in Checkin.objects.all():
+            if str(checkin.date) == d:
+                if checkin.profile.income == request.user.profile.income:
+                    incomeScores.append(checkin)
+
+        avg = 0
+        checkins = Checkin.objects.filter(profile=request.user.profile)
+
+        for checkin in checkins:
+            avg += checkin.score
+
+        if len(checkins):
+            avg = round(avg / len(checkins), 2)
+
+        context = {
+            'avg': avg,
+            'contScores': contScores,
+            'zipScores': zipScores,
+            'incomeScores': incomeScores,
+            'checkins': checkins,
+            'users': users,
+        }
+        return render(request, 'pages/profile.html', context)
+
 
 
 
 @login_required
 def add_checkin(request):
-    api_list = Impact.objects.all()
-    checkin = Checkin.objects.create(score=0)
-    footprint = 0
-    for item in api_list:
-        check = request.POST.get(item.item)
-        footprint += int(check) * float(item.co2PerUnit)
-        Serving.objects.create(container=checkin, key=item, value=int(check))
+    if request.method == 'POST':
+        api_list = Impact.objects.all()
+        checkin = Checkin.objects.create(score=0)
+        footprint = 0
+        for item in api_list:
+            check = request.POST.get(item.item)
+            footprint += int(check) * float(item.co2PerUnit)
+            Serving.objects.create(container=checkin, key=item, value=int(check))
 
-    checkin.profile = request.user.profile
-    checkin.score = round(footprint, 2)
-    checkin.save()
+        checkin.profile = request.user.profile
+        checkin.score = round(footprint, 2)
+        checkin.save()
 
-    return redirect('checkin')
+        today = datetime.date.today()
+        d = today.strftime("%Y-%m-%d")
+
+        users = User.objects.all()
+
+        contScores = []
+        for checkin in Checkin.objects.all():
+            if str(checkin.date) == d:
+                if checkin.profile.continent == request.user.profile.continent:
+                    contScores.append(checkin)
+
+        zipScores = []
+        for checkin in Checkin.objects.all():
+            if str(checkin.date) == d:
+                if checkin.profile.zipCode == request.user.profile.zipCode:
+                    zipScores.append(checkin)
+
+        incomeScores = []
+        for checkin in Checkin.objects.all():
+            if str(checkin.date) == d:
+                if checkin.profile.income == request.user.profile.income:
+                    incomeScores.append(checkin)
+
+        avg = 0
+        checkins = Checkin.objects.filter(profile=request.user.profile)
+
+        for checkin in checkins:
+            avg += checkin.score
+
+        if len(checkins):
+            avg = round(avg / len(checkins), 2)
+
+        context = {
+            'avg': avg,
+            'contScores': contScores,
+            'zipScores': zipScores,
+            'incomeScores': incomeScores,
+            'checkins': checkins,
+            'users': users,
+        }
+        return render(request, 'pages/profile.html', context)
 
     # api_list = Impact.objects.all()
     # today = datetime.date.today()

@@ -44,6 +44,6 @@ class Checkin(models.Model):
     return str(self.profile) + ", " + str(self.date)
 
 class Serving(models.Model):
-  container = models.ForeignKey(Checkin, on_delete=PROTECT)
+  container = models.ForeignKey(Checkin, on_delete=models.CASCADE)
   key = models.CharField(max_length=100)
   value = models.IntegerField()
