@@ -27,9 +27,9 @@ INCOME_LEVELS = (
 
 class Profile(models.Model):
   user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-  zipCode = models.CharField(max_length=10, null=True, blank=True, default="12345")
-  continent = models.CharField(choices=CONTINENTS, max_length=20, null=True, blank=True, default="Asia")
-  income = models.CharField(choices=INCOME_LEVELS, max_length=25, null=True, blank=True, default="0 to 10k")
+  zipCode = models.CharField(max_length=10, null=True, blank=True, default="")
+  continent = models.CharField(choices=CONTINENTS, max_length=20, null=True, blank=True, default="")
+  income = models.CharField(choices=INCOME_LEVELS, max_length=25, null=True, blank=True, default="")
   profile_pic = models.ImageField(null=True, blank=True, upload_to='images/', default='images/default.jpg')
 
   def __str__(self):
