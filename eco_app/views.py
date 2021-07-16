@@ -159,24 +159,25 @@ def compare(request, username):
 def editProfile(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            edits = form.save(commit=False)
-            edits.save()
+        # if form.is_valid():
+            # edits = form.save(commit=False)
+            # edits.save()
+        user = request.user.profile
 
-            # if request.POST.get("zip") != None:
-            #     user.zipCode = form.cleaned_data['zipCode']
+        if request.POST.get("zip") != None:
+            user.zipCode = form.cleaned_data['zipCode']
 
-            # if request.POST.get("continent") != "":
-            #     user.continent = form.cleaned_data['continent']
+        if request.POST.get("continent") != "":
+            user.continent = form.cleaned_data['continent']
 
-            # if request.POST.get("income") != "":
-            #     user.income = form.cleaned_data['income']
+        if request.POST.get("income") != "":
+            user.income = form.cleaned_data['income']
 
-            # if request.FILES['profile_pic'] != None:
-            #     user.profile_pic = form.cleaned_data['profile_pic']
+        if request.FILES['profile_pic'] != None:
+            user.profile_pic = form.cleaned_data['profile_pic']
 
-            # user.save()
-            return profilepage(request)
+        user.save()
+        return profilepage(request)
     else:
         form = ProfileForm()
 
