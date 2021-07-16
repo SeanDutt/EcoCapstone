@@ -159,10 +159,9 @@ def editProfile(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            user = Profile.objects.filter(user=request.user).first()
-            profile = form.save(commit=False)
-            profile.user = user
-            profile.save()
+            edits = form.save(commit=False)
+            edits.user = request.user
+            edits.save()
 
 
 
