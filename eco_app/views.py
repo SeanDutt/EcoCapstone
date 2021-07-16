@@ -169,7 +169,7 @@ def editProfile(request):
             if request.POST.get("income") != "":
                 user.income = form.cleaned_data['income']
 
-            if request.FILES['profile_pic'] != None:
+            if request.POST.get("profile_pic") != None:
                 user.profile_pic = form.cleaned_data['profile_pic']
 
             user.save()
