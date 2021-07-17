@@ -2,11 +2,14 @@
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
-  width: fit-content;
+  width: 25%;
 }
 form input, select {
+  margin-bottom: 16px;
+}
+.update {
   display: grid;
   grid-template-columns: 90% auto;
-  margin-bottom: 16px;
-  width: 100%;
+  border-bottom: 1px solid black;
+  padding: 8px 0px 8px 0px;
 }

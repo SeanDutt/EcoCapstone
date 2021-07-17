@@ -158,40 +158,28 @@ def compare(request, username):
 @login_required
 def editProfile(request):
     if request.method == 'POST':
-        zip = request.POST.get('zip')
-        continent = request.POST.get('continent')
-        income = request.POST.get('income')
-        profile_pic = request.FILES.get('profile_pic')
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = request.user.profile
 
-        Profile.objects.create(zip=zip, continent=continent, income=income, profile_pic = profile_pic)
+            if request.POST.get("zip") != "":
+                user.zipCode = form.cleaned_data['zipCode']
 
-        return redirect(profilepage)
+            if request.POST.get("continent") != "":
+                user.continent = form.cleaned_data['continent']
 
-    elif request.method == 'GET':
-        return render(request, 'pages/editProfile.html')
-    #     form = ProfileForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         edits = form.save(commit=False)
-    #         edits.save()
+            if request.POST.get("income") != "":
+                user.income = form.cleaned_data['income']
 
-    #         # if request.POST.get("zip") != None:
-    #         #     user.zipCode = form.cleaned_data['zipCode']
+            if request.FILES.get('profile_pic'):
+                user.profile_pic = form.cleaned_data['profile_pic']
 
-    #         # if request.POST.get("continent") != "":
-    #         #     user.continent = form.cleaned_data['continent']
+            user.save()
+            return profilepage(request)
+    else:
+        form = ProfileForm()
 
-    #         # if request.POST.get("income") != "":
-    #         #     user.income = form.cleaned_data['income']
-
-    #         # if request.FILES['profile_pic'] != None:
-    #         #     user.profile_pic = form.cleaned_data['profile_pic']
-
-    #         # user.save()
-    #         return profilepage(request)
-    # else:
-    #     form = ProfileForm()
-
-    # return render(request, 'pages/editProfile.html', {'form': form})
+    return render(request, 'pages/editProfile.html', {'form': form})
 
 
 @login_required

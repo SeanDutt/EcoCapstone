@@ -1,16 +1,20 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'css/editProfile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/choice.css' %}">
 {% endblock %}
 {% block content %}
 <div class="container">
   <form action="/updateCheckin/" method="POST" id="updateCheckin">
     {% csrf_token %}
-    <label for="replace">Replace check-ins.</label>
-    <input type="radio" id="replace" name="choice" value="Replace checkins">
-    <label for="tally">Add to check-ins.</label>
-    <input type="radio" id="tally" name="choice" value="Add to checkins">
+    <div class="update">
+      <label for="replace">Replace check-ins.</label>
+      <input type="radio" id="replace" name="choice" value="Replace checkins">
+    </div>
+    <div class="update">
+      <label for="tally">Add to check-ins.</label>
+      <input type="radio" id="tally" name="choice" value="Add to checkins">
+    </div>
     <input type="submit" value="Submit!">
   </form>
 </div>

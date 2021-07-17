@@ -25,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # development
-# SECRET_KEY = 'django-insecure-nbbr=8)2v^+y+$+)1x@8fh8)=3ck1zc(3)at_h06veb--4^_q='
+SECRET_KEY = 'django-insecure-nbbr=8)2v^+y+$+)1x@8fh8)=3ck1zc(3)at_h06veb--4^_q='
 
 # production
-SECRET_KEY = os.environ.get("DJANGO_KEY")
+# SECRET_KEY = os.environ.get("DJANGO_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -134,20 +134,20 @@ USE_TZ = True
 
 
 # development
-# STATIC_URL = '/static/'
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-# production
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+# production
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 
@@ -162,11 +162,11 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Production
 
-CLOUDINARY_STORAGE ={
-  'CLOUD_NAME': os.environ.get("CLOUD_NAME"), 
-  'API_KEY': os.environ.get("API_KEY"),
-  'API_SECRET': os.environ.get("API_SECRET")
-}
+# CLOUDINARY_STORAGE ={
+#   'CLOUD_NAME': os.environ.get("CLOUD_NAME"), 
+#   'API_KEY': os.environ.get("API_KEY"),
+#   'API_SECRET': os.environ.get("API_SECRET")
+# }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
